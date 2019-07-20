@@ -1,0 +1,8 @@
+{
+  "presets": [["next/babel", { "preset-env": { "modules": "commonjs" } }]],
+  "plugins": [
+    ["styled-components", { "ssr": true, "displayName": true, "preprocess": false }],
+    ["lodash", { "id": ["lodash"] }],
+    ["@babel/plugin-proposal-pipeline-operator", { "proposal": "minimal" }]
+  ]
+}
