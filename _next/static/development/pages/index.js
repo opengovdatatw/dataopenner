@@ -46432,6 +46432,11 @@ var Footer = _styledComponents["default"].div.withConfig({
   componentId: "lgvotk-3"
 })([""]);
 
+var colors = (0, _randomcolor["default"])({
+  luminosity: "light",
+  count: 300
+});
+
 var Home =
 /*#__PURE__*/
 function (_React$PureComponent) {
@@ -46473,7 +46478,7 @@ function (_React$PureComponent) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _axios["default"].get("/static/data.json");
+                return _axios["default"].get("./static/data.json");
 
               case 2:
                 res = _context.sent;
@@ -46514,26 +46519,26 @@ function (_React$PureComponent) {
       return _react["default"].createElement(Document, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 52
+          lineNumber: 54
         },
         __self: this
       }, _react["default"].createElement(Header, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 53
+          lineNumber: 55
         },
         __self: this
       }, "\u8CC7\u6599\u7533\u8ACB\u5C0F\u5E6B\u624B"), _react["default"].createElement(_Head["default"], {
         title: "\u8CC7\u6599\u7533\u8ACB\u5C0F\u5E6B\u624B",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 54
+          lineNumber: 56
         },
         __self: this
       }), _react["default"].createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 55
+          lineNumber: 57
         },
         __self: this
       }, "View on GitHub"), data && _react["default"].createElement(_reactVis.Sunburst, {
@@ -46559,25 +46564,25 @@ function (_React$PureComponent) {
         getSize: function getSize(d) {
           return d.value;
         },
-        getColor: function getColor() {
-          return (0, _randomcolor["default"])();
+        getColor: function getColor(d) {
+          return colors[d.idx];
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 57
+          lineNumber: 59
         },
         __self: this
       }, tip && _react["default"].createElement(Tip, {
         value: tip,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 70
+          lineNumber: 72
         },
         __self: this
       }, tip.name)), _react["default"].createElement(Footer, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 73
+          lineNumber: 75
         },
         __self: this
       }, "\u6211\u60F3\u8981\u66F4\u591A"));
