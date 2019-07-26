@@ -183,6 +183,23 @@ var Head = function Head(props) {
       lineNumber: 34
     },
     __self: this
+  }), _react["default"].createElement("script", {
+    async: true,
+    src: "https://www.googletagmanager.com/gtag/js?id=UA-64601259-3",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 35
+    },
+    __self: this
+  }), _react["default"].createElement("script", {
+    dangerouslySetInnerHTML: {
+      __html: "\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n    \n          gtag('config', 'UA-64601259-3');\n        "
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 36
+    },
+    __self: this
   }));
 };
 
