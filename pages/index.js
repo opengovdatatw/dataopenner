@@ -1,39 +1,62 @@
+import _ from "lodash";
 import React from "react";
-import styled, { css } from "styled-components";
 import axios from "axios";
-import { Sunburst } from "react-vis";
-import randomColor from "randomcolor";
+import styled from "styled-components";
 import Head from "../components/Head";
+import Rank from "../components/Rank";
+import RankSunburst from "../components/RankSunburst";
 
-const Document = styled.div``;
-const Header = styled.div``;
-const Tip = styled.div`
-  display: flex;
-  color: #fff;
-  background: #000;
-  align-items: center;
-  padding: 5px;
-  position: absolute;
-  ${({ value }) => {
-    const { radius, angle, angle0 } = value;
-    const truedAngle = (angle + angle0) / 2;
-    const position = {
-      x: `${radius * Math.cos(truedAngle) + 400}px`,
-      y: `${radius * Math.sin(truedAngle) + 400}px`,
-    };
-    return css`
-      bottom: ${position.y};
-      left: ${position.x};
-    `;
-  }}
+const Topbar = styled.div`
+  height: 20px;
 `;
 
-const Footer = styled.div``;
+const Title = styled.div`
+  font-size: 1.5em;
+  padding: 3px 10px 3px 10px;
+  background: #ffffff;
+  display: inline-block;
+  border-radius: 3px;
+`;
+
+const Document = styled.div`
+  background-image: url("./static/background.jpg");
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+`;
+
+const Mask = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, 0.6);
+`;
+
+const Container = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
+const Main = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+const RankPanel = styled(Rank)`
+  margin-right: 0;
+`;
 
 export default class Home extends React.PureComponent {
   state = {
-    data: {},
-    tip: false,
+    data: null,
   };
 
   componentDidMount() {
@@ -41,36 +64,49 @@ export default class Home extends React.PureComponent {
   }
 
   async loadData() {
-    const res = await axios.get("/static/data.json");
-    this.setState({ data: await res.data });
+    const res = await axios.get("./static/data.json");
+    const raw = await res.data;
+    const fields = _.pullAt(raw, [0])[0];
+    const data = _.map(raw, item => _.mapKeys(item, (__, key) => fields[key]));
+    this.setState({ data });
+  }
+
+  renderSunburst() {
+    const { data } = this.state;
+    if (!data) return null;
+
+    return <RankSunburst data={data} />;
+  }
+
+  renderRank() {
+    const { data } = this.state;
+    if (!data) return null;
+
+    return <RankPanel data={data} />;
   }
 
   render() {
-    const { data, tip } = this.state;
-
     return (
       <Document>
-        <Header>資料申請小幫手</Header>
         <Head title="資料申請小幫手" />
-        <div>View on GitHub</div>
-        {data && (
-          <Sunburst
-            data={data}
-            style={{ stroke: "#fff", position: "relative" }}
-            onValueMouseOver={v =>
-              this.setState({ tip: v.x && v.y ? v : false })
-            }
-            // onValueMouseOut={() => this.setState({ tip: false })}
-            height={800}
-            width={800}
-            margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
-            getSize={d => d.value}
-            getColor={() => randomColor()}
-          >
-            {tip && (<Tip value={tip}>{tip.name}</Tip>)}
-          </Sunburst>
-        )}
-        <Footer>我想要更多</Footer>
+        <Mask>
+          <Container className="container">
+            <Topbar />
+            <div>
+              <Title>資料申請小幫手</Title>
+            </div>
+            {this.renderRank()}
+            <Main>
+              <div>View on GitHub</div>
+              <button type="button" className="btn btn-primary">
+                立即檢索申請狀況
+              </button>
+              <button type="button" className="btn btn-primary">
+                我想要更多
+              </button>
+            </Main>
+          </Container>
+        </Mask>
       </Document>
     );
   }

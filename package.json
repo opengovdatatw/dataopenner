@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "next build && next export && touch out/.nojekyll && gh-pages -t -d out"
   },
   "dependencies": {
     "@babel/core": "^7.5.5",
@@ -25,10 +26,12 @@
     "lodash": "^4.17.15",
     "next": "^9.0.2",
     "prettier": "^1.18.2",
+    "prop-types": "^15.7.2",
     "randomcolor": "^0.5.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-vis": "^1.11.7",
+    "recompose": "^0.30.0",
     "styled-components": "^4.3.2"
   }
 }

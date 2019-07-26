@@ -1,4 +1,5 @@
 module.exports = {
+  assetPrefix: process.env.NODE_ENV === "production" ? "/dataopener" : "",
   webpack: config => {
     // Fixes npm packages that depend on `fs` module
     config.node = {
@@ -6,5 +7,8 @@ module.exports = {
     }
 
     return config
-  }
+  },
+  exportPathMap: () => ({
+    "/": { page: "/" },
+  }),
 }
